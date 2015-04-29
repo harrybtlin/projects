@@ -81,11 +81,6 @@ public class FileUpload extends HttpServlet {
 			Pattern p = Pattern.compile(regExp);
 			while (iter.hasNext()) {
 				FileItem item = (FileItem) iter.next();
-//				if(item.isFormField()) {
-//					if(item.getFieldName().equals("id")) {
-//						id = Integer.parseInt(item.getString());
-//					}
-//				}
 				
 				if (!item.isFormField()) {
 					String name = item.getName();
@@ -102,20 +97,13 @@ public class FileUpload extends HttpServlet {
 								throw new IOException(name + ": wrong type");
 							}
 						}
-						try {
-//							File f = new File(uploadPath + id + ".jpg");
-//							item.write(f);
-							
-							if(fieldName.equals("ingredients")) {
-								ingredients = FileUtils.parseIngredients(item.getInputStream());
-							} else {
-								recipes = FileUtils.parseRecipes(item.get());
-							}
-							
-						} catch (Exception e) {
-							out.println(e);
+						
+						if(fieldName.equals("ingredients")) {
+							ingredients = FileUtils.parseIngredients(item.getInputStream());
+						} else {
+							recipes = FileUtils.parseRecipes(item.get());
 						}
-
+							
 					} else {
 						throw new IOException("fail to upload");
 					}
